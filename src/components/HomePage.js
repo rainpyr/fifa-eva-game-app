@@ -2,16 +2,10 @@ import React from 'react';
 import {useState} from 'react';
 import '../App.css';
 import {useNavigate, Link} from 'react-router-dom';
-import qatar from '../img/qat.jpg';
-import brazil from '../img/bra.jpg';
-import england from '../img/eng.jpg';
-import spain from '../img/esp.jpg';
-import portugal from '../img/por.jpg';
-import argentina from '../img/arg.jpg';
-import france from '../img/fra.jpg';
-import belgium from '../img/bel.jpg';
-import help from '../img/help.png';
+
 import PlayGame from './PlayGame'
+
+
 
 function HomePage(){
     const navigate = useNavigate();
@@ -26,7 +20,7 @@ function HomePage(){
       };
     const [ownTeam, setOwnTeam] = useState('');
     const [opponentTeam, setOpponentTeam] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+   
 
     function startGame(ev){
         ev.preventDefault();
@@ -34,40 +28,37 @@ function HomePage(){
     };
 
     function handleOwnTeamSelection(ev){
-        console.log('ownteam', ev.target.value);
+        // console.log('ownteam', ev.target.value);
         setOwnTeam(ev.target.value);
         
         
     };
 
     function handleOpponentTeamSelection(ev){
-        console.log('opponentteam', ev.target.value);
+        // console.log('opponentteam', ev.target.value);
         setOpponentTeam(ev.target.value)
         
     };
     
 
     return (
-    
- 
         
-
         <div id ="startScreen">
             <div id="title">FIVA 2022</div>
             <div id="selectTeam">
                 Top Seeds Teams
                 <div id="ulLeft">
                     <ul id="left">
-                        <li value="1"> <img src={qatar}/> Qatar </li>
-                        <li value="2"> <img src={brazil}/> Brazil</li>
-                        <li value='3'> <img src={belgium}/> Belgium</li>
-                        <li value='4'> <img src={france}/> France</li>
+                        <li value="1"> <img src="/img/qat.jpg"/> Qatar </li>
+                        <li value="2"> <img src="/img/bra.jpg"/> Brazil</li>
+                        <li value='3'> <img src="/img/bel.jpg"/> Belgium</li>
+                        <li value='4'> <img src="/img/fra.jpg"/> France</li>
                         
                     
-                        <li value='5'> <img src={argentina}/> Argentina</li>
-                        <li value='6'> <img src={england}/> England</li>
-                        <li value='7'> <img src={spain}/> Spain</li>
-                        <li value='8'> <img src={portugal}/> Portugal</li>
+                        <li value='5'> <img src="/img/arg.jpg"/> Argentina</li>
+                        <li value='6'> <img src="/img/eng.jpg"/> England</li>
+                        <li value='7'> <img src="/img/esp.jpg"/> Spain</li>
+                        <li value='8'> <img src="/img/por.jpg"/> Portugal</li>
                     </ul>
                 </div>
                 <div id="selections">
@@ -103,24 +94,20 @@ function HomePage(){
             </div>
             
             <button id="play" onClick={startGame} disabled={!ownTeam || !opponentTeam || ownTeam == opponentTeam}>PLAY</button>
+            {(!ownTeam || !opponentTeam) &&
             <div id="alertMessage"><em>Please make your team selections</em></div>
+            }
+            {ownTeam == opponentTeam && 
+            <div id="errorMessage" ><em>You can't compete with yourself</em></div>
+            }
             <br/><br/>
-            <img src={help} height="100" width="150" id="help"/>
+            <img src="/img/help.png" height="100" width="150" id="help"/>
             <br/>
             <span id ="instructions">(Use left and right arrow keys to play)</span>
             
         </div>
-        
           
-        
-    
-
-
-
-
     ); // return
-
-
 
 } // HomePage
 

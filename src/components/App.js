@@ -19,7 +19,7 @@ function App(){
           </Routes>
             <div id='footer'>
                 <footer>
-                <hr/>
+                {/* <hr/> */}
                 &copy; FIFA x Eva Productions 2022 
                 </footer>
             </div>

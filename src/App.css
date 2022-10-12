@@ -26,20 +26,16 @@ canvas {
   height: 720px;
   background-image: url('img/splash.jpg');
   position:absolute;
-  
   font-family: verdana;
   color: white;
 }
+
 ul {
   columns: 4;
   list-style-type: none;
   text-align: left;
   font-size: 15px;
 }
-
-
-
-
 
 #selections {
   margin-top: 15px;
@@ -149,7 +145,7 @@ ul {
 }
 
 
-#alertMessage {
+#alertMessage, #errorMessage {
   /* display: none; */
   font-size: 10px;
   text-align: center;
