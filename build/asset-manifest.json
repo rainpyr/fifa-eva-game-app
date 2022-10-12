@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/fifa-eva-game-app/static/css/main.b1703398.css",
+    "main.js": "/fifa-eva-game-app/static/js/main.c1dc63fb.js",
+    "static/media/background.jpg": "/fifa-eva-game-app/static/media/background.56ec1c7ec86d567e3d94.jpg",
+    "static/media/splash.jpg": "/fifa-eva-game-app/static/media/splash.0db0b5b1230804e03be1.jpg",
+    "static/media/pitch3.jpg": "/fifa-eva-game-app/static/media/pitch3.9f45580e5e9acfd9a27a.jpg",
+    "index.html": "/fifa-eva-game-app/index.html",
+    "main.b1703398.css.map": "/fifa-eva-game-app/static/css/main.b1703398.css.map",
+    "main.c1dc63fb.js.map": "/fifa-eva-game-app/static/js/main.c1dc63fb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b1703398.css",
+    "static/js/main.c1dc63fb.js"
+  ]
+}
