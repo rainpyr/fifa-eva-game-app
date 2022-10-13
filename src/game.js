@@ -1,7 +1,7 @@
 import SAT from 'sat';
 import {Routes, Router, Route, useNavigate, useParams} from 'react-router-dom';
 
-
+const GAME_DURATION = 60 * 2 ;
 const game = {
 
 canvas: null,
@@ -17,7 +17,7 @@ ballRadius: 6,
 dx: 3,
 dy: -3,
 
-//initialize teams' X
+//initialize 
 m: 0,
 j: 0,
 
@@ -70,9 +70,10 @@ ballImage: new Image(),
 
 
 //it all starts here
-    init(canvas, ownPlayerImg, opponentPlayerImg) {
+    init(canvas, ownPlayerImg, opponentPlayerImg, gameOverCallback) {
         console.log('init()canvas', canvas);
         this.canvas = canvas;
+        this.gameOverCallback = gameOverCallback;
         this.ctx = this.canvas.getContext('2d');
         this.x = this.canvas.width/2;
         this.y = this.canvas.height/2;
@@ -112,7 +113,7 @@ ballImage: new Image(),
 
 setInitialDelay() {
     setTimeout(() => {
-        this.startTimer(60 * 2);
+        this.startTimer(GAME_DURATION);
         this.drawFlag = true;
         window.requestAnimationFrame(() => this.draw());
         this.updateStatus('You are team <br> in <span style="color:red">RED</span>');
@@ -139,17 +140,22 @@ startTimer(duration) {
         document.getElementById('countdown').innerHTML = minutes + ":" + seconds;
 
         if (--timer < 0) {
-            document.getElementById('gameOverScreen').style['z-index'] = 3;
-            this.gameOver = true;
+            this.onGameOver();
             clearInterval(countdown);
-            if (this.ownScore > this.opponentScore)
-            this.updateStatus('GAME OVER!<br>You Won!');
-            else if (this.opponentScore > this.ownScore)
-            this.updateStatus('GAME OVER!<br>You Lost!');
-            else
-            this.updateStatus('GAME OVER!<br>Draw!')
         }
     }, 1000);
+},
+
+onGameOver() {
+    document.getElementById('gameOverScreen').style['z-index'] = 3;
+    this.gameOver = true;
+    if (this.ownScore > this.opponentScore)
+    this.updateStatus('GAME OVER!<br>You Won!');
+    else if (this.opponentScore > this.ownScore)
+    this.updateStatus('GAME OVER!<br>You Lost!');
+    else
+    this.updateStatus('GAME OVER!<br>Draw!');
+    this.gameOverCallback(this.ownScore, this.opponentScore);
 },
 
 // draw the match
@@ -293,13 +299,12 @@ removeStatus() {
 },
 
 
-
 drawGoalkeeper() {
 
     let goalkeeperX = this.paddleX / 2 + this.m;
     let goalkeeperY = this.canvas.height * 7 / 8 - this.paddleHeight;
     this.ctx.drawImage(this.ownPlayer, goalkeeperX, goalkeeperY - 15, this.playerWidth, this.playerHeight);
-    // drawRods(goalkeeperY);
+  
     this.box = new this.B(new this.V(goalkeeperX, goalkeeperY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetection(this.box, goalkeeperX);
 
@@ -327,7 +332,7 @@ drawMidfielders() {
     //midfielders
     let leftWingBackX = this.paddleX * 1 / 8 + this.m;
     let leftWingBackY = this.canvas.height * 5 / 8 - this.paddleHeight;
-    // drawRods(leftWingBackY);
+   
     this.ctx.drawImage(this.ownPlayer, leftWingBackX, leftWingBackY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(leftWingBackX, leftWingBackY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetection(this.box, leftWingBackX);
@@ -356,7 +361,7 @@ drawStrikers() {
     //attackers
     let leftWingForwardX = this.paddleX / 4 + this.m;
     let leftWingForwardY = this.canvas.height * 9 / 32 - this.paddleHeight;
-    // drawRods(leftWingForwardY);
+   
     this.ctx.drawImage(this.ownPlayer, leftWingForwardX, leftWingForwardY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(leftWingForwardX, leftWingForwardY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetection(this.box, leftWingForwardX);
@@ -376,12 +381,11 @@ drawStrikers() {
 },
 
 
-
 drawOpponentGoalkeeper() {
 
     let goalkeeperX = this.paddleX / 2 + this.j;
     let goalkeeperY = this.canvas.height * 1 / 8 - this.paddleHeight;
-    // drawRods(goalkeeperY);
+    
     this.ctx.drawImage(this.opponentPlayer, goalkeeperX, goalkeeperY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(goalkeeperX, goalkeeperY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetectionOpponent(this.box, goalkeeperX);
@@ -397,7 +401,7 @@ drawOpponentDefenders() {
 
     let leftCenterBackX = this.paddleX / 4 + this.j;
     let leftCenterBackY = this.canvas.height * 3 / 16 - this.paddleHeight;
-    // drawRods(leftCenterBackY);
+   
     this.ctx.drawImage(this.opponentPlayer, leftCenterBackX, leftCenterBackY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(leftCenterBackX, leftCenterBackY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetectionOpponent(this.box, leftCenterBackX);
@@ -423,7 +427,7 @@ drawOpponentMidfielders() {
     //midfielders
     let leftWingBackX = this.paddleX * 1 / 8 + this.j;
     let leftWingBackY = this.canvas.height * 3 / 8 -this. paddleHeight;
-    // drawRods(leftWingBackY)
+   
     this.ctx.drawImage(this.opponentPlayer, leftWingBackX, leftWingBackY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(leftWingBackX, leftWingBackY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetectionOpponent(this.box, leftWingBackX);
@@ -445,7 +449,6 @@ drawOpponentMidfielders() {
     this.ctx.drawImage(this.opponentPlayer, rightWingBackX, rightWingBackY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(rightWingBackX, rightWingBackY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetectionOpponent(this.box, rightWingBackX);
-
     if (this.x > leftWingBackX && leftWingBackX < this.paddleX * 3 / 4)
     this.j += this.aiSpeed;
     else if (leftWingBackX > this.paddleX * 1 / 4)
@@ -470,7 +473,6 @@ drawOpponentStrikers() {
     this.ctx.beginPath();
     let leftWingForwardX = this.paddleX / 4 + this.j;
     let leftWingForwardY = this.canvas.height * 23 / 32 - this.paddleHeight;
-    // drawRods(leftWingForwardY);
     this.ctx.drawImage(this.opponentPlayer, leftWingForwardX, leftWingForwardY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(leftWingForwardX, leftWingForwardY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetectionOpponent(this.box, leftWingForwardX);
@@ -481,15 +483,12 @@ drawOpponentStrikers() {
     this.ctx.drawImage(this.opponentPlayer, centerForwardX, centerForwardY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(centerForwardX, centerForwardY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetectionOpponent(this.box, centerForwardX);
-
     this.ctx.beginPath();
     let rightWingForwardX = this.paddleX * 3 / 4 + this.j;
     let rightWingForwardY = this.canvas.height * 23 / 32 - this.paddleHeight;
     this.ctx.drawImage(this.opponentPlayer, rightWingForwardX, rightWingForwardY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(rightWingForwardX, rightWingForwardY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetectionOpponent(this.box, rightWingForwardX);
-
-
 
     if (this.x > leftWingForwardX && leftWingForwardX < this.paddleX * 3 / 4)
     this.j += this.aiSpeed;
@@ -504,8 +503,6 @@ drawOpponentStrikers() {
     else if ( centerForwardX > this.paddleX * 1 / 4)
     this.j -= this.aiSpeed;
     
-
-
 },
 
 
@@ -564,25 +561,6 @@ goalDetection(box) {
     return SAT.testPolygonCircle(box, this.circle, response);
 },
 
-
-
-// keyDownHandler(e) {
-//     console.log('down');
-    
-//     if (e.keyCode == 39) {
-//         this.rightPressed = true;
-//     } else if (e.keyCode == 37) {
-//         this.leftPressed = true;
-//     }
-// },
-
-// keyUpHandler(e) {
-//     if (e.keyCode == 39) {
-//         this.rightPressed = false;
-//     } else if (e.keyCode == 37) {
-//         this.leftPressed = false;
-//     }
-// }
 }; // game
 
 export default game;

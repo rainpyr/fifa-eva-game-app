@@ -103,8 +103,8 @@ ul {
 }
 #playagain, #backHome {
   margin-left: 140px;
-  margin-top: 100px;
-  width: auto;
+  margin-top: 40px;
+  width: 210px;
   margin-bottom: 100px;
   padding: 20px 35px;
   background: white;
@@ -115,6 +115,14 @@ ul {
   font-family: verdana;
   border-radius: 4px;
   margin-bottom: 10px;
+}
+
+#backHome{
+  margin-top: 10px;
+}
+
+#flagImg {
+  margin-top: 20px;
 }
 #help {
   padding-left: 285px;
@@ -154,4 +162,13 @@ ul {
 footer {
   font-family: fantasy;
   color: lightcoral;
+}
+
+#statsTable {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }

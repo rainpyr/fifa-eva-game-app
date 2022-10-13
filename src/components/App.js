@@ -5,6 +5,7 @@ import {Routes, HashRouter as Router, Route, Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import PlayGame from './PlayGame';
 import HomePage from './HomePage';
+import GameStats from './GameStats';
 
 function App(){
    
@@ -15,7 +16,8 @@ function App(){
         <Router>
           <Routes>
             <Route path="/" element={<HomePage/>} />
-            <Route path="/game/:ownteam/:opponentteam" element={ <PlayGame/> } />            
+            <Route path="/game/:ownteam/:opponentteam" element={ <PlayGame/> } /> 
+            <Route path="/stats/:ownteam/:opponentteam" element={ <GameStats/> } />               
           </Routes>
             <div id='footer'>
                 <footer>
