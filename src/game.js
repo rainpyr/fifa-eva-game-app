@@ -1,7 +1,7 @@
 import SAT from 'sat';
 import {Routes, Router, Route, useNavigate, useParams} from 'react-router-dom';
 
-const GAME_DURATION = 60 * 2 ;
+const GAME_DURATION = 60 * 2;
 const game = {
 
 canvas: null,
@@ -18,10 +18,10 @@ dx: 3,
 dy: -3,
 
 //initialize 
-m: 0,
-j: 0,
+m: 0, // ownTeam
+j: 0, // opponentTeam
 
-aiSpeed: 1.25,
+aiSpeed: 1.25, // for opponentTeam
 
 //set paddle dimensions
 paddleHeight: 10,
@@ -51,8 +51,6 @@ gameOver: false,
 flag1: 1,
 flag2: 1,
 drawFlag: true,
-
-
 
 
 //initialize SAT.js letiables
@@ -161,7 +159,6 @@ onGameOver() {
 // draw the match
 draw() {
     // console.log('draw', this);
-    
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.drawBall();
     this.drawPlayers();
@@ -177,20 +174,14 @@ draw() {
         window.requestAnimationFrame(() => this.draw());
 },
 
-// ball picture
 
 drawBall() {
 
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2, true);
-    // ctx.clip();
-    
     this.ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-    // ctx.fillStyle = ctx.createPattern(ballImage, 'no-repeat')
     this.ctx.drawImage(this.ballImage, this.x-7.5, this.y-7.5, 12, 12)
-    
     this.ctx.fill();
-    
     this.ctx.closePath();
     
     this.circle = new this.C(new this.V(this.x, this.y), 6);
@@ -209,8 +200,7 @@ drawBall() {
 
 drawPlayers() {
     this.drawOwnTeam();
-    this.drawOpponentTeam();
-    
+    this.drawOpponentTeam();   
 },
 
 drawOwnTeam() {
@@ -284,12 +274,10 @@ resetBall() {
     this.drawBall();
     this.drawFlag = false;
     window.requestAnimationFrame(() => this.draw());
-
 },
 
 updateStatus(message) {
     document.getElementById('status').innerHTML = message;
-
 },
 
 removeStatus() {
@@ -300,7 +288,6 @@ removeStatus() {
 
 
 drawGoalkeeper() {
-
     let goalkeeperX = this.paddleX / 2 + this.m;
     let goalkeeperY = this.canvas.height * 7 / 8 - this.paddleHeight;
     this.ctx.drawImage(this.ownPlayer, goalkeeperX, goalkeeperY - 15, this.playerWidth, this.playerHeight);
@@ -315,7 +302,7 @@ drawDefenders() {
 
     let leftCenterBackX = this.paddleX / 4 + this.m;
     let leftCenterBackY = this.canvas.height * 13 / 16 - this.paddleHeight;
-    // drawRods(leftCenterBackY);
+
     this.ctx.drawImage(this.ownPlayer, leftCenterBackX, leftCenterBackY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(leftCenterBackX, leftCenterBackY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetection(this.box, leftCenterBackX);
@@ -377,12 +364,10 @@ drawStrikers() {
     this.ctx.drawImage(this.ownPlayer, rightWingForwardX, rightWingForwardY - 15, this.playerWidth, this.playerHeight);
     this.box = new this.B(new this.V(rightWingForwardX, rightWingForwardY), this.playerWidth, this.paddleHeight).toPolygon();
     this.collisionDetection(this.box, rightWingForwardX);
-
 },
 
 
 drawOpponentGoalkeeper() {
-
     let goalkeeperX = this.paddleX / 2 + this.j;
     let goalkeeperY = this.canvas.height * 1 / 8 - this.paddleHeight;
     
@@ -394,11 +379,9 @@ drawOpponentGoalkeeper() {
     this.j += this.aiSpeed;
     else if (goalkeeperX > this.paddleX * 1 / 4)
     this.j -= this.aiSpeed;
-
 },
 
 drawOpponentDefenders() {
-
     let leftCenterBackX = this.paddleX / 4 + this.j;
     let leftCenterBackY = this.canvas.height * 3 / 16 - this.paddleHeight;
    

@@ -45,17 +45,28 @@ function GameStats(){
 
     return(
         <div id="gameStats">
+
             <h3>Game stats between {params.ownteam} and {params.opponentteam}</h3>
-            {results.map(r => 
+            <Link to={`/game/${params.ownteam}/${params.opponentteam}`}>
+            <div>
+                <button id="backToGame">back to Game</button>
+            </div>
+            </Link>
+            <Link to="/">
+            <div>
+                <button id="backToHome">back to HOME</button>
+            </div>
+            </Link>
+            
                 <table id="statsTable">
-                    <tr>
+                    
                         <th>Own Team</th>
                         <th>Opponent Team</th>
                         <th>Own Score</th>
                         <th>Opponent Score</th>
                         <th>Game Time</th>
-                    </tr>
-
+                    
+                    {results.map(r => 
                     <tr>
                         <td>{r.self_team}</td>
                         <td>{r.opponent_team}</td>
@@ -63,20 +74,11 @@ function GameStats(){
                         <td>{r.opponent_score}</td>
                         <td>{formatDate(r.created_at)}</td>
                     </tr>
-
+                    )}
                 </table>
                 
-                )}
-            <Link to={`/game/${params.ownteam}/${params.opponentteam}`}>
-            <div id="backToGame">
-                <button id="">back to Game</button>
-            </div>
-            </Link>
-            <Link to="/">
-            <div id="backToHome">
-                <button id="">back to HOME</button>
-            </div>
-            </Link>
+                
+            
         </div>
         
     )

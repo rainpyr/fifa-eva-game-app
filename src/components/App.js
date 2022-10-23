@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import PlayGame from './PlayGame';
 import HomePage from './HomePage';
 import GameStats from './GameStats';
+import Profile from './Profile'
 
 function App(){
    
@@ -17,7 +18,9 @@ function App(){
           <Routes>
             <Route path="/" element={<HomePage/>} />
             <Route path="/game/:ownteam/:opponentteam" element={ <PlayGame/> } /> 
-            <Route path="/stats/:ownteam/:opponentteam" element={ <GameStats/> } />               
+            <Route path="/stats/:ownteam/:opponentteam" element={ <GameStats/> } />     
+
+            <Route path="/user/profile" element={ <Profile/> } />          
           </Routes>
             <div id='footer'>
                 <footer>

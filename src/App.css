@@ -2,7 +2,8 @@
   width: 720px;
   height: 720px;
   /* border-style: solid;
-  border-width: 10px; */
+  border-width: 5px;
+  border-color: brown; */
   margin: 0 auto;
   position: relative;
 }
@@ -152,6 +153,9 @@ ul {
   font-size: 20px;
 }
 
+h3 {
+  text-align: center;
+}
 
 #alertMessage, #errorMessage {
   /* display: none; */
@@ -164,11 +168,34 @@ footer {
   color: lightcoral;
 }
 
+table {  
+  font-family:sans-serif; 
+  margin:auto 
+}
+
 #statsTable {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-collapse:separate;
+  border-spacing:.25em 1em;
+  text-align: center;
+  
+}
+
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
+
+#gameStats {
+  background-image: url('img/background.jpg');
+
+}
+
+#backToHome, #backToGame { 
+  background: white;
+  border: 0;
+  font-size: 15px;
+  color: #424242;
+  font-weight: bold;
+  font-family: verdana;
+  border-radius: 4px;
+  margin: auto auto 5px auto;
+  cursor: pointer;
 }

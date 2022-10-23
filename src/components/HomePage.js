@@ -1,26 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useState} from 'react';
 import '../App.css';
 import {useNavigate, Link} from 'react-router-dom';
 
 import PlayGame from './PlayGame'
+import axios from 'axios';
+
 
 
 
 function HomePage(){
     const navigate = useNavigate();
-    const navigateToGame = () => {
-        // navigate to /game
-        navigate('/game');
-      };
+    // const navigateToGame = () => {
+    //     // navigate to /game
+    //     navigate('/game');
+    //   };
     
-      const navigateHome = () => {
-        // navigate to /
-        navigate('/');
-      };
+    //   const navigateHome = () => {
+    //     // navigate to /
+    //     navigate('/');
+    //   };
     const [ownTeam, setOwnTeam] = useState('');
     const [opponentTeam, setOpponentTeam] = useState('');
-   
+    const [signedIn, setSignedIn] = useState(false);
+    
+
+    
+   function userSignIn () {
+
+       axios.post('http://localhost:3000/login', {email: 'eva@ga.co', password: 'chicken'}).then((res) => {
+        setSignedIn(true);
+        sessionStorage.setItem('jwtToken', res.data.token)   
+       } )
+   };
+
+   function getProfile(ev) {
+    
+    ev.preventDefault();
+    navigate(`/user/profile`)
+
+   }
 
     function startGame(ev){
         ev.preventDefault();
@@ -40,11 +59,18 @@ function HomePage(){
         
     };
     
+    
 
     return (
         
+        
         <div id ="startScreen">
             <div id="title">FIVA 2022</div>
+            <div id='signin'>
+                
+                {signedIn? <button onClick={getProfile}>profile</button> : <button onClick={userSignIn}>sign in</button>}
+
+            </div>
             <div id="selectTeam">
                 Top Seeds Teams
                 <div id="ulLeft">

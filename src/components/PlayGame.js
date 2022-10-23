@@ -45,8 +45,7 @@ function PlayGame(props){
             console.log(res.data);
             
         } catch(err){
-            console.error(err);
-            
+            console.error(err);    
         }
         
     }
@@ -78,16 +77,13 @@ function PlayGame(props){
                 <div id ="status"></div>
                 <div id="goToStats">
                     <button onClick={goToStats}>Check Stats
-
                     </button>
                     
                 </div>
                 <Link to="/">
-                
                 <button id="backHome1">HOME PAGE</button>
                 </Link>
                 
-        
             </div>
         </div>
     )
